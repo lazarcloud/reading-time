@@ -1,6 +1,7 @@
 package reading_time
 
 import (
+	"math"
 	"time"
 )
 
@@ -39,14 +40,14 @@ func (e *Estimator) CalculateReadingTime(totalWords, totalImages, totalLinesOfCo
 	readingTime += e.CalculateImagesTime(totalImages)
 	readingTime += e.CalculateCodeTime(totalLinesOfCode)
 
-	return readingTime
+	return roundDurationToNearestSecond(readingTime)
 }
 
 // CalculateWordsTime calculates reading time based on word count
 func (e *Estimator) CalculateWordsTime(totalWords int) time.Duration {
 	wordsPerSecond := time.Minute / time.Duration(e.WordsPerMinute)
 	wordsReadingTime := time.Duration(totalWords) * wordsPerSecond
-	return wordsReadingTime
+	return roundDurationToNearestSecond(wordsReadingTime)
 }
 
 // CalculateImagesTime calculates additional time based on the number of images
@@ -59,11 +60,18 @@ func (e *Estimator) CalculateImagesTime(totalImages int) time.Duration {
 			adjustmentTime += e.BaseImageTime - time.Duration(e.ImageThreshold-1)*e.ImageTimeDecay
 		}
 	}
-	return adjustmentTime
+	return roundDurationToNearestSecond(adjustmentTime)
 }
 
 // CalculateCodeTime calculates additional time based on lines of code
 func (e *Estimator) CalculateCodeTime(totalLinesOfCode int) time.Duration {
 	lineAdjustmentTime := time.Duration(totalLinesOfCode) * e.SecondsPerLine
-	return lineAdjustmentTime
+	return roundDurationToNearestSecond(lineAdjustmentTime)
+}
+
+// roundDurationToNearestSecond rounds the duration to the nearest second
+func roundDurationToNearestSecond(duration time.Duration) time.Duration {
+	seconds := duration.Seconds()
+	roundedSeconds := math.Round(seconds)
+	return time.Duration(roundedSeconds) * time.Second
 }
