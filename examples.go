@@ -8,7 +8,7 @@ import (
 func ExampleCalculateWordsTime() {
 	// Custom estimator with 250 words per minute
 	customEstimator := NewEstimator(
-		time.Duration(250),
+		250,
 		time.Duration(2),
 		time.Duration(12),
 		time.Duration(1),
@@ -21,7 +21,7 @@ func ExampleCalculateWordsTime() {
 func ExampleCalculateImagesTime() {
 	// Custom estimator with 10 seconds base image time and decay of 2 seconds per image
 	customEstimator := NewEstimator(
-		time.Duration(200),
+		200,
 		time.Duration(2),
 		time.Duration(10),
 		time.Duration(2),
@@ -38,7 +38,7 @@ func ExampleCalculateImagesTime() {
 func ExampleCalculateCodeTime() {
 	// Custom estimator with 3 seconds per line of code
 	customEstimator := NewEstimator(
-		time.Duration(200),
+		200,
 		time.Duration(3),
 		time.Duration(12),
 		time.Duration(1),
@@ -51,7 +51,7 @@ func ExampleCalculateCodeTime() {
 func ExampleCalculateReadingTime() {
 	// Custom estimator with 200 words per minute, 2 seconds per line, and base image time of 15 seconds
 	customEstimator := NewEstimator(
-		time.Duration(200),
+		200,
 		time.Duration(2),
 		time.Duration(15),
 		time.Duration(1),
@@ -63,7 +63,7 @@ func ExampleCalculateReadingTime() {
 
 	// Example with a faster reading custom estimator
 	fasterEstimator := NewEstimator(
-		time.Duration(300),
+		300,
 		time.Duration(1),
 		time.Duration(10),
 		time.Duration(1),
